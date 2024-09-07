@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:resolute_ai_assignment_app/providers/auth_scren_provider.dart';
 import 'package:resolute_ai_assignment_app/router/generate_route.dart';
 import 'package:resolute_ai_assignment_app/screens/auth_screen/authentication_screen.dart';
-import 'package:resolute_ai_assignment_app/screens/forgot_password_screen/forgot_password_screen.dart';
 import 'package:resolute_ai_assignment_app/utils/assets.dart';
 
 void main() {

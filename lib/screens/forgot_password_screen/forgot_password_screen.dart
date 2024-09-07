@@ -10,7 +10,6 @@ class ForgotPasswordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.sizeOf(context).height;
 
     return Scaffold(
       backgroundColor: Colors.white,

@@ -3,6 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 
 class Assets {
   static const loginAnimation = 'assets/animations/login_animation.json';
+  static const phoneAnimation = 'assets/animations/phone_animation.json';
+  static const otpVerificationAnimation =
+      'assets/animations/otp_verification_animation.json';
   static const forgotPasswordImage = 'assets/images/forgot_password.jpg';
 }
 

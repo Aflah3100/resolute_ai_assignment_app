@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:resolute_ai_assignment_app/providers/auth_scren_provider.dart';
 import 'package:resolute_ai_assignment_app/router/route_constants.dart';
 import 'package:resolute_ai_assignment_app/screens/forgot_password_screen/forgot_password_screen.dart';
+import 'package:resolute_ai_assignment_app/screens/otp_auth_screen/phone_number_verification_screen.dart';
 import 'package:resolute_ai_assignment_app/utils/assets.dart';
 
 class AuthenticationScreen extends StatelessWidget {
@@ -289,7 +290,11 @@ class AuthenticationScreen extends StatelessWidget {
                         FontAwesomeIcons.phone,
                         color: AppColors.darkBlueColor,
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        //Phone-number-verification-screen
+                        Navigator.pushNamed(
+                            context, PhoneNumberVerificationScreen.routeName);
+                      },
                       buttonColor: Colors.grey[100]!,
                       textColor: Colors.grey[600]!),
                   const SizedBox(
