@@ -32,6 +32,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_otp_text_field: ^1.2.0
+  fluttertoast: ^8.2.8
   font_awesome_flutter: ^10.7.0
   google_fonts: ^6.2.1
   lottie: ^3.1.2
@@ -56,6 +57,7 @@ flutter:
     - assets/animations/login_animation.json
     - assets/animations/phone_animation.json
     - assets/animations/otp_verification_animation.json
+    - assets/animations/register_user_animation.json
     - assets/images/forgot_password.jpg
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see

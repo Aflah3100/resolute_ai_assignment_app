@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [ChangeNotifierProvider(create: (ctx) => AuthScrenProvider())],
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Resolute AI Assignment',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: AppColors.darkBlueColor),
           useMaterial3: true,
