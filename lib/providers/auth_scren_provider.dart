@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class AuthScrenProvider with ChangeNotifier {
   bool _isLoginValue = true;
   bool _isPasswordVisible = false;
+  bool _isLoading = false;
 
   bool isLoginMode() => _isLoginValue;
 
@@ -15,6 +16,13 @@ class AuthScrenProvider with ChangeNotifier {
 
   void setIsPasswordVisible(bool value) {
     _isPasswordVisible = value;
+    notifyListeners();
+  }
+
+  bool isLoading() => _isLoading;
+
+  void setLoadingStatus(bool value) {
+    _isLoading = value;
     notifyListeners();
   }
 }

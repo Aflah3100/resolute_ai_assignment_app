@@ -81,10 +81,13 @@ class PhoneNumberVerificationScreen extends StatelessWidget {
                 height: 60,
               ),
               AuthenticationButton(
-                  label: 'Send OTP',
-                  onTap: () {},
-                  buttonColor: AppColors.darkBlueColor,
-                  textColor: Colors.white)
+                label: 'Send OTP',
+                onTap: () {},
+                buttonColor: AppColors.darkBlueColor,
+                textColor: Colors.white,
+                isLoading: false,
+                loadingColor: Colors.white,
+              )
             ],
           ),
         ),

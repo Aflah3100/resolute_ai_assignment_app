@@ -6,7 +6,7 @@ import 'package:resolute_ai_assignment_app/screens/auth_screen/authentication_sc
 import 'package:resolute_ai_assignment_app/utils/assets.dart';
 
 class NewUserRegisterScreen extends StatelessWidget {
-  static const routeName = RouteConstants.NewUserRegisterScreen;
+  static const routeName = RouteConstants.newUserRegisterScreen;
   const NewUserRegisterScreen(
       {super.key, required this.registeredMobileNumber});
 
@@ -173,7 +173,9 @@ class NewUserRegisterScreen extends StatelessWidget {
                               label: 'Register & Continue',
                               onTap: () {},
                               buttonColor: AppColors.darkBlueColor,
-                              textColor: Colors.white)
+                              textColor: Colors.white,
+                              isLoading: false,
+                              loadingColor: Colors.white,)
                         ],
                       ),
                     )
