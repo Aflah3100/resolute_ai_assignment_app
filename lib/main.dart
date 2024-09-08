@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:resolute_ai_assignment_app/providers/auth_scren_provider.dart';
 import 'package:resolute_ai_assignment_app/router/generate_route.dart';
 import 'package:resolute_ai_assignment_app/screens/auth_screen/authentication_screen.dart';
+import 'package:resolute_ai_assignment_app/screens/otp_auth_screen/otp_verification_screen.dart';
 import 'package:resolute_ai_assignment_app/screens/user_profile_screen/user_profile_screen.dart';
 import 'package:resolute_ai_assignment_app/utils/assets.dart';
 
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
         ),
         onGenerateRoute: generateRoute,
-        home: UserProfileScreen(fullName: 'Aflah',  emailAddress: 'aflah3100@gmail.com',mobileNumber: '7373',)
+        home: AuthenticationScreen()
       ),
     );
   }

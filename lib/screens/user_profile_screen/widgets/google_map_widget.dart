@@ -31,7 +31,6 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
   @override
   void initState() {
     super.initState();
-    //debugPrint("123> super.initState();");
     _getLocation();
   }
 
@@ -47,7 +46,7 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
         setState(() {
           isLoading = false;
         });
-        return; // User did not enable location services
+        return;
       }
     }
 
@@ -76,10 +75,8 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
       setState(() {
         isLoading = false;
       });
-      //debugPrint('Error getting location: $e');
     }
 
-    // move if there is initialLatLng
     if (widget.initialLatLng != null) {
       _onMapTap(widget.initialLatLng!);
     }
@@ -89,11 +86,11 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
     showDialog(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: Text('Location permission required'),
-        content: Text('Please enable location permission to use'),
+        title: const Text('Location permission required'),
+        content: const Text('Please enable location permission to use'),
         actions: <Widget>[
           TextButton(
-            child: Text('Ok'),
+            child: const Text('Ok'),
             onPressed: () {
               Navigator.of(context).pop();
               location.requestService(); // Open location settings
@@ -126,7 +123,6 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
           zoomControlsEnabled: false,
           onTap: _onMapTap,
           onMapCreated: (GoogleMapController controller) {
-            // move if there is initialLatLng
             if (widget.initialLatLng != null) {
               _addMarker(widget.initialLatLng!);
             }
@@ -171,14 +167,13 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
     } else if (currentLocation != null) {
       var currentLatLng =
           LatLng(currentLocation!.latitude!, currentLocation!.longitude!);
-      // _onMapTap(currentLatLng);
       return CameraPosition(
         target: currentLatLng,
         zoom: 14.0,
       );
     } else {
       return const CameraPosition(
-        target: LatLng(11.5564, 104.9282), // Default to Phnom Penh coordinates
+        target: LatLng(0, 0),
         zoom: 14.0,
       );
     }
@@ -190,18 +185,17 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
       isLoading = false;
       _addMarker(tappedPoint);
     });
-    widget.onMapTap(tappedPoint); // Call the callback function
+    widget.onMapTap(tappedPoint);
   }
 
   void _addMarker(LatLng tappedPoint) {
-    markers.clear(); // Clear existing markers
+    markers.clear();
     markers.add(
       Marker(
         markerId: MarkerId(tappedPoint.toString()),
         position: tappedPoint,
         draggable: true,
-        icon: BitmapDescriptor.defaultMarkerWithHue(
-            BitmapDescriptor.hueRed), // marker icon
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
         onDragEnd: (dragEndPosition) {
           _onMarkerDragEnd(dragEndPosition);
         },
@@ -210,7 +204,7 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
   }
 
   void _onMarkerDragEnd(LatLng position) {
-    _onMapTap(position); // Recursion here soumen bc
+    _onMapTap(position);
   }
 
   void _goToUserLocation() {

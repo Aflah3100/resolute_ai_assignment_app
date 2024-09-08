@@ -38,17 +38,16 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           'User Info',
           style: AppTextStyles.appTextStyle(
               fontColor: Colors.black,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w600,
               fontSize: 25),
         ),
         centerTitle: true,
       ),
-      body: Padding(
+      body: Container(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+        child: ListView(
           children: [
-            
+            //Google-Map-Widget
             SizedBox(
               height: 300,
               child: GoogleMapWidget(
@@ -56,6 +55,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 initialLatLng: _tappedPoint,
                 laterLatLng: _laterLatLng,
               ),
+            ),
+            const SizedBox(
+              height: 50,
             ),
             // Profile Picture
             CircleAvatar(
@@ -74,12 +76,14 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             const SizedBox(height: 20),
 
             // Full Name
-            Text(
-              widget.fullName,
-              style: AppTextStyles.appTextStyle(
-                  fontColor: Colors.black,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold),
+            Center(
+              child: Text(
+                widget.fullName,
+                style: AppTextStyles.appTextStyle(
+                    fontColor: Colors.black,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold),
+              ),
             ),
             const SizedBox(height: 10),
 
