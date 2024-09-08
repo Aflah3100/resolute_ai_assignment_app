@@ -1,16 +1,33 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
+import 'package:resolute_ai_assignment_app/models/user_model.dart';
 import 'package:resolute_ai_assignment_app/providers/auth_scren_provider.dart';
 import 'package:resolute_ai_assignment_app/router/route_constants.dart';
+import 'package:resolute_ai_assignment_app/screens/firebase/firebase_auth/firebase_auth_functions.dart';
 import 'package:resolute_ai_assignment_app/screens/forgot_password_screen/forgot_password_screen.dart';
+import 'package:resolute_ai_assignment_app/screens/home_screen/home_screen.dart';
 import 'package:resolute_ai_assignment_app/screens/otp_auth_screen/phone_number_verification_screen.dart';
 import 'package:resolute_ai_assignment_app/utils/assets.dart';
 
 class AuthenticationScreen extends StatelessWidget {
   static const routeName = RouteConstants.authenticationScreen;
-  const AuthenticationScreen({super.key});
+  AuthenticationScreen({super.key});
+
+  //controllers
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final mobileController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordcontroller = TextEditingController();
+
+  //keys
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +80,7 @@ class AuthenticationScreen extends StatelessWidget {
                       //Name-textfield
                       if (!authScreenProvider.isLoginMode()) ...[
                         TextFormField(
+                          controller: nameController,
                           keyboardType: TextInputType.name,
                           decoration: InputDecoration(
                               enabledBorder: UnderlineInputBorder(
@@ -85,6 +103,7 @@ class AuthenticationScreen extends StatelessWidget {
 
                       //email-textfield
                       TextFormField(
+                        controller: emailController,
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                             enabledBorder: UnderlineInputBorder(
@@ -107,6 +126,7 @@ class AuthenticationScreen extends StatelessWidget {
                       //mobileno-textfield
                       if (!authScreenProvider.isLoginMode()) ...[
                         TextFormField(
+                          controller: mobileController,
                           keyboardType: TextInputType.phone,
                           decoration: InputDecoration(
                               enabledBorder: UnderlineInputBorder(
@@ -128,6 +148,7 @@ class AuthenticationScreen extends StatelessWidget {
                       ],
                       //password-textfield
                       TextFormField(
+                        controller: passwordController,
                         keyboardType: TextInputType.visiblePassword,
                         obscureText: (authScreenProvider.isPasswordVisible())
                             ? false
@@ -184,6 +205,7 @@ class AuthenticationScreen extends StatelessWidget {
                       //confirm-password-textfield
                       if (!authScreenProvider.isLoginMode()) ...[
                         TextFormField(
+                          controller: confirmPasswordcontroller,
                           keyboardType: TextInputType.visiblePassword,
                           obscureText: true,
                           decoration: InputDecoration(
@@ -240,7 +262,27 @@ class AuthenticationScreen extends StatelessWidget {
                   //Continue Button
                   AuthenticationButton(
                     label: 'Continue',
-                    onTap: () {},
+                    onTap: () async {
+                      //Register-user
+
+                      if (verifySignUpDetails()) {
+                        final userModel = UserModel(
+                            fullName: nameController.text,
+                            emailId: emailController.text,
+                            mobileNo: mobileController.text);
+                        final authResult = await FirebaseAuthFunctions.instance
+                            .registerNewUserUsingEmail(
+                                userModel: userModel,
+                                password: passwordController.text);
+                        if (authResult is bool) {
+                          //Authentication Sucess
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (_) => HomeScreen()));
+                        } else if (authResult is String) {
+                          showErrorToast(authResult);
+                        }
+                      }
+                    },
                     buttonColor: AppColors.lightBlueColor,
                     textColor: Colors.white,
                   ),
@@ -248,7 +290,27 @@ class AuthenticationScreen extends StatelessWidget {
                   //Login Button
                   AuthenticationButton(
                     label: 'Login',
-                    onTap: () {},
+                    onTap: () async {
+                      //Sign-in-User
+
+                      if (verifySigninDetails()) {
+                        //Sign-in-user
+                        final authResult = await FirebaseAuthFunctions.instance
+                            .authenticateUserUsingEmail(
+                                emailId: emailController.text,
+                                password: passwordController.text);
+                        if (authResult is UserModel) {
+                          //signin-succes
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (_) => HomeScreen()));
+                        } else if (authResult is FirebaseAuthException) {
+                          showErrorToast(
+                              authResult.message ?? 'Error Signing In');
+                        } else if (authResult is String) {
+                          showErrorToast(authResult);
+                        }
+                      }
+                    },
                     buttonColor: AppColors.lightBlueColor,
                     textColor: Colors.white,
                   ),
@@ -342,6 +404,75 @@ class AuthenticationScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  bool verifySigninDetails() {
+    if (emailController.text.isEmpty) {
+      showErrorToast('Email id can\'t be empty');
+      return false;
+    } else if (!isValidEmail(emailController.text)) {
+      showErrorToast('Enter valid email address');
+      return false;
+    } else if (passwordController.text.isEmpty) {
+      showErrorToast('Please enter your password');
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  bool verifySignUpDetails() {
+    if (nameController.text.isEmpty) {
+      showErrorToast('Name can\'t be empty');
+      return false;
+    } else if (nameController.text.length < 5) {
+      showErrorToast('Enter a valid name');
+      return false;
+    } else if (emailController.text.isEmpty) {
+      showErrorToast('email address cant be empty');
+      return false;
+    } else if (!isValidEmail(emailController.text)) {
+      showErrorToast('Enter a valid email address');
+      return false;
+    } else if (mobileController.text.isEmpty) {
+      showErrorToast('Mobile number cant be empty');
+      return false;
+    } else if (mobileController.text.length < 10) {
+      showErrorToast('Enter valid phone number');
+      return false;
+    } else if (passwordController.text.isEmpty) {
+      showErrorToast('Password can\'t be empty');
+      return false;
+    } else if (passwordController.text.length < 8) {
+      showErrorToast('Password mut be of length >=8');
+      return false;
+    } else if (confirmPasswordcontroller.text.isEmpty) {
+      showErrorToast('Confirm your entered password');
+      return false;
+    } else if (passwordController.text != confirmPasswordcontroller.text) {
+      showErrorToast('Password and confirm password doesn\'t match');
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  void showErrorToast(String message) {
+    Fluttertoast.showToast(
+        msg: message,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        gravity: ToastGravity.CENTER);
+  }
+
+  bool isValidEmail(String email) {
+    // Define the regular expression for validating email addresses
+    final RegExp emailRegex = RegExp(
+      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+    );
+
+    // Check if the email matches the regex pattern
+    return emailRegex.hasMatch(email);
   }
 }
 
