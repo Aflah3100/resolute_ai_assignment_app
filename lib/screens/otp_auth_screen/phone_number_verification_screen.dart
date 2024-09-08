@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -102,16 +104,17 @@ class PhoneNumberVerificationScreen extends StatelessWidget {
                           (PhoneAuthCredential userCredential) async {
                         await FirebaseAuth.instance
                             .signInWithCredential(userCredential);
-
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => UserProfileScreen(
-                                    fullName: 'OTP AUTO CHECK',
-                                    emailAddress: 'otpautocheck@gmail.com',
-                                    mobileNumber: '9090909090')));
+                        //Route-to-home-screen
+                        Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          UserProfileScreen.routeName,
+                          (Route<dynamic> route) => false,
+                        );
                       },
                       verificationFailed: (FirebaseAuthException e) {
+                        Navigator.pushNamed(
+                            context, OtpVerificationScreen.routeName,
+                            arguments: [phoneController.text, '']);
                         showErrorToast('Verification Failed: ${e.message}');
                       },
                       codeSent: (verificationId, forceResendingToken) {

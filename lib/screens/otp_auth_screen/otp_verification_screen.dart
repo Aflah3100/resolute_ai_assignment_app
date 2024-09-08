@@ -1,9 +1,12 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
 import 'package:resolute_ai_assignment_app/router/route_constants.dart';
+import 'package:resolute_ai_assignment_app/screens/new_user_regrn_screen/new_user_regrn_screen.dart';
 import 'package:resolute_ai_assignment_app/screens/user_profile_screen/user_profile_screen.dart';
 import 'package:resolute_ai_assignment_app/utils/assets.dart';
 
@@ -100,14 +103,16 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                           await FirebaseAuth.instance
                               .signInWithCredential(userCredential);
 
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(builder: (context) {
-                            return UserProfileScreen(
-                                fullName: 'OTP LOGIN CHECK',
-                                emailAddress: 'otplogian@gmail.com',
-                                mobileNumber: '8080808080');
-                          }));
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            UserProfileScreen.routeName,
+                            (Route<dynamic> route) => false,
+                          );
                         } catch (e) {
+                          //if-user-not-registered-with-app
+                          Navigator.pushNamed(
+                              context, NewUserRegisterScreen.routeName,
+                              arguments: widget.phoneNumber);
                           Fluttertoast.showToast(msg: 'Verification failed $e');
                         }
                       },

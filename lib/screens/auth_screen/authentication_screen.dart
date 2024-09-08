@@ -13,6 +13,7 @@ import 'package:resolute_ai_assignment_app/screens/firebase/firebase_auth/fireba
 import 'package:resolute_ai_assignment_app/screens/forgot_password_screen/forgot_password_screen.dart';
 import 'package:resolute_ai_assignment_app/screens/user_profile_screen/user_profile_screen.dart';
 import 'package:resolute_ai_assignment_app/screens/otp_auth_screen/phone_number_verification_screen.dart';
+import 'package:resolute_ai_assignment_app/services/shared_prefs.dart';
 import 'package:resolute_ai_assignment_app/utils/assets.dart';
 
 class AuthenticationScreen extends StatelessWidget {
@@ -315,11 +316,13 @@ class AuthenticationScreen extends StatelessWidget {
                                                               .text);
                                           if (authResult is bool) {
                                             //Authentication Sucess
-                                            // Navigator.pushReplacement(
-                                            //     context,
-                                            //     MaterialPageRoute(
-                                            //         builder: (_) =>
-                                            //             HomeScreen()));
+                                            await SharedPrefs.instance
+                                                .saveUserModel(userModel);
+                                            Navigator.pushNamedAndRemoveUntil(
+                                              context,
+                                              UserProfileScreen.routeName,
+                                              (Route<dynamic> route) => false,
+                                            );
                                           } else if (authResult is String) {
                                             showErrorToast(authResult);
                                           }
@@ -365,11 +368,13 @@ class AuthenticationScreen extends StatelessWidget {
                                                               .text);
                                           if (authResult is UserModel) {
                                             //signin-succes
-                                            // Navigator.pushReplacement(
-                                            //     context,
-                                            //     MaterialPageRoute(
-                                            //         builder: (_) =>
-                                            //             HomeScreen()));
+                                            await SharedPrefs.instance
+                                                .saveUserModel(authResult);
+                                            Navigator.pushNamedAndRemoveUntil(
+                                              context,
+                                              UserProfileScreen.routeName,
+                                              (Route<dynamic> route) => false,
+                                            );
                                           } else if (authResult
                                               is FirebaseAuthException) {
                                             showErrorToast(authResult.message ??

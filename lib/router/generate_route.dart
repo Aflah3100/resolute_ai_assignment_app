@@ -6,6 +6,7 @@ import 'package:resolute_ai_assignment_app/screens/forgot_password_screen/forgot
 import 'package:resolute_ai_assignment_app/screens/new_user_regrn_screen/new_user_regrn_screen.dart';
 import 'package:resolute_ai_assignment_app/screens/otp_auth_screen/otp_verification_screen.dart';
 import 'package:resolute_ai_assignment_app/screens/otp_auth_screen/phone_number_verification_screen.dart';
+import 'package:resolute_ai_assignment_app/screens/user_profile_screen/user_profile_screen.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
   switch (routeSettings.name) {
@@ -31,6 +32,8 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         return NewUserRegisterScreen(
             registeredMobileNumber: registeredMobileNumber);
       });
+    case UserProfileScreen.routeName:
+      return MaterialPageRoute(builder: (_) => const UserProfileScreen());
     default:
       return MaterialPageRoute(
           builder: (_) => const Scaffold(
