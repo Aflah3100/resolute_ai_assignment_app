@@ -4,9 +4,10 @@ import 'package:provider/provider.dart';
 import 'package:resolute_ai_assignment_app/providers/auth_scren_provider.dart';
 import 'package:resolute_ai_assignment_app/router/generate_route.dart';
 import 'package:resolute_ai_assignment_app/screens/auth_screen/authentication_screen.dart';
+import 'package:resolute_ai_assignment_app/screens/user_profile_screen/user_profile_screen.dart';
 import 'package:resolute_ai_assignment_app/utils/assets.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   //Initialize-firebase
@@ -30,7 +31,11 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
         ),
         onGenerateRoute: generateRoute,
-        home:  AuthenticationScreen(),
+        home: UserProfileScreen(
+          fullName: 'Aflah Sedhique',
+          emailAddress: 'aflahpopzz363@gmail.com',
+          mobileNumber: '7373454537',
+        ),
       ),
     );
   }

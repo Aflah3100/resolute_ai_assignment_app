@@ -11,7 +11,7 @@ import 'package:resolute_ai_assignment_app/providers/auth_scren_provider.dart';
 import 'package:resolute_ai_assignment_app/router/route_constants.dart';
 import 'package:resolute_ai_assignment_app/screens/firebase/firebase_auth/firebase_auth_functions.dart';
 import 'package:resolute_ai_assignment_app/screens/forgot_password_screen/forgot_password_screen.dart';
-import 'package:resolute_ai_assignment_app/screens/home_screen/home_screen.dart';
+import 'package:resolute_ai_assignment_app/screens/user_profile_screen/user_profile_screen.dart';
 import 'package:resolute_ai_assignment_app/screens/otp_auth_screen/phone_number_verification_screen.dart';
 import 'package:resolute_ai_assignment_app/utils/assets.dart';
 
