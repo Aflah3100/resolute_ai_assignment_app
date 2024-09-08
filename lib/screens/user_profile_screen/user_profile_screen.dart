@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:resolute_ai_assignment_app/screens/user_profile_screen/widgets/google_map_widget.dart';
 import 'package:resolute_ai_assignment_app/utils/assets.dart';
 
-class UserProfileScreen extends StatelessWidget {
+class UserProfileScreen extends StatefulWidget {
   final String fullName;
   final String emailAddress;
   final String mobileNumber;
@@ -12,6 +14,21 @@ class UserProfileScreen extends StatelessWidget {
     required this.emailAddress,
     required this.mobileNumber,
   });
+
+  @override
+  State<UserProfileScreen> createState() => _UserProfileScreenState();
+}
+
+class _UserProfileScreenState extends State<UserProfileScreen> {
+  LatLng? _tappedPoint;
+  LatLng? _laterLatLng;
+
+  void _handleTap(LatLng tappedPoint) {
+    setState(() {
+      _tappedPoint = tappedPoint;
+      _laterLatLng = null;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +48,22 @@ class UserProfileScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            
+            SizedBox(
+              height: 300,
+              child: GoogleMapWidget(
+                onMapTap: (mTappedPoint) => _handleTap(mTappedPoint),
+                initialLatLng: _tappedPoint,
+                laterLatLng: _laterLatLng,
+              ),
+            ),
             // Profile Picture
             CircleAvatar(
               radius: 50,
               backgroundColor: AppColors.lightBlueColor,
               child: Text(
                 getInitials(
-                  fullName,
+                  widget.fullName,
                 ),
                 style: AppTextStyles.appTextStyle(
                     fontColor: Colors.white,
@@ -49,7 +75,7 @@ class UserProfileScreen extends StatelessWidget {
 
             // Full Name
             Text(
-              fullName,
+              widget.fullName,
               style: AppTextStyles.appTextStyle(
                   fontColor: Colors.black,
                   fontSize: 24,
@@ -64,7 +90,7 @@ class UserProfileScreen extends StatelessWidget {
                 const Icon(Icons.email, color: Colors.grey),
                 const SizedBox(width: 8),
                 Text(
-                  emailAddress,
+                  widget.emailAddress,
                   style: AppTextStyles.appTextStyle(
                       fontColor: Colors.grey[700]!,
                       fontSize: 18,
@@ -81,7 +107,7 @@ class UserProfileScreen extends StatelessWidget {
                 const Icon(Icons.phone, color: Colors.grey),
                 const SizedBox(width: 8),
                 Text(
-                  mobileNumber,
+                  widget.mobileNumber,
                   style: AppTextStyles.appTextStyle(
                       fontColor: Colors.grey[700]!,
                       fontSize: 18,
@@ -89,7 +115,6 @@ class UserProfileScreen extends StatelessWidget {
                 ),
               ],
             ),
-
 
             const Spacer(),
           ],

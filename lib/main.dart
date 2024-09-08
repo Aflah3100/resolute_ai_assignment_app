@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
         ),
         onGenerateRoute: generateRoute,
-        home: AuthenticationScreen()
+        home: UserProfileScreen(fullName: 'Aflah',  emailAddress: 'aflah3100@gmail.com',mobileNumber: '7373',)
       ),
     );
   }
