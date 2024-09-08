@@ -10,16 +10,20 @@ import 'package:resolute_ai_assignment_app/screens/otp_auth_screen/phone_number_
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
   switch (routeSettings.name) {
     case AuthenticationScreen.routeName:
-      return MaterialPageRoute(builder: (_) =>  AuthenticationScreen());
+      return MaterialPageRoute(builder: (_) => AuthenticationScreen());
     case ForgotPasswordScreen.routeName:
-      return MaterialPageRoute(builder: (_) =>  ForgotPasswordScreen());
+      return MaterialPageRoute(builder: (_) => ForgotPasswordScreen());
     case PhoneNumberVerificationScreen.routeName:
-      return MaterialPageRoute(
-          builder: (_) => const PhoneNumberVerificationScreen());
+      return MaterialPageRoute(builder: (_) => PhoneNumberVerificationScreen());
     case OtpVerificationScreen.routeName:
       return MaterialPageRoute(builder: (_) {
-        final phoneNumber = routeSettings.arguments as String;
-        return OtpVerificationScreen(phoneNumber: phoneNumber);
+        final args = routeSettings.arguments as List;
+        final phoneNumber = args[0] as String;
+        final verificationId = args[1] as String;
+        return OtpVerificationScreen(
+          phoneNumber: phoneNumber,
+          verificationId: verificationId,
+        );
       });
     case NewUserRegisterScreen.routeName:
       return MaterialPageRoute(builder: (_) {
