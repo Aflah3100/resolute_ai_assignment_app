@@ -12,7 +12,7 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
     case AuthenticationScreen.routeName:
       return MaterialPageRoute(builder: (_) =>  AuthenticationScreen());
     case ForgotPasswordScreen.routeName:
-      return MaterialPageRoute(builder: (_) => const ForgotPasswordScreen());
+      return MaterialPageRoute(builder: (_) =>  ForgotPasswordScreen());
     case PhoneNumberVerificationScreen.routeName:
       return MaterialPageRoute(
           builder: (_) => const PhoneNumberVerificationScreen());
