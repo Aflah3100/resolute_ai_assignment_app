@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:resolute_ai_assignment_app/providers/auth_scren_provider.dart';
 import 'package:resolute_ai_assignment_app/router/route_constants.dart';
 import 'package:resolute_ai_assignment_app/screens/auth_screen/authentication_screen.dart';
-import 'package:resolute_ai_assignment_app/screens/firebase/firebase_auth/firebase_auth_functions.dart';
+import 'package:resolute_ai_assignment_app/firebase/firebase_auth/firebase_auth_functions.dart';
 import 'package:resolute_ai_assignment_app/utils/assets.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {

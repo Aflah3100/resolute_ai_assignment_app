@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:resolute_ai_assignment_app/models/user_model.dart';
-import 'package:resolute_ai_assignment_app/screens/firebase/firestore_db/firestore_db_functions.dart';
+import 'package:resolute_ai_assignment_app/firebase/firestore_db/firestore_db_functions.dart';
 
 class FirebaseAuthFunctions {
   FirebaseAuthFunctions._internal();
